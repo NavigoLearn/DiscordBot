@@ -2,10 +2,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed, version} = require("discord.js");
 const { UA } = require("../../config.json");
 const moment = require("moment");
-const m = require("moment-duration-format");
 let os = require('os')
 let cpuStat = require("cpu-stat")
-const ms = require("ms")
 
 module.exports.help = {
     name: `info`,

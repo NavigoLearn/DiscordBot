@@ -63,5 +63,5 @@ module.exports.interaction = async (interaction, client) => {
     );
 
   // Send embed
-  interaction.reply({ embeds: [embed], ephemeral: true });
+  interaction.reply({ embeds: [embed], ephemeral: false });
 };

@@ -16,10 +16,12 @@ const client = new Client({
 
 client.commands = new Collection();
 
-const commandFolders = fs.readdirSync('./commands');
+const commandFolders = fs.readdirSync("./commands");
 
 for (const folder of commandFolders) {
-  const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+  const commandFiles = fs
+    .readdirSync(`./commands/${folder}`)
+    .filter((file) => file.endsWith(".js"));
   for (const file of commandFiles) {
     const command = require(`./commands/${folder}/${file}`);
     const commandName = command.help.name.toLowerCase();
@@ -28,23 +30,28 @@ for (const folder of commandFolders) {
     console.log(`| Command category: ${command.help.cat} |`);
 
     client.commands.set(commandName, command);
-    };
-  };
-console.log(`----------------------------`)
+  }
+}
+console.log(`----------------------------`);
 console.log("Successfully loaded commands to memory");
-
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
   client.user.setActivity(
-    `${config.activity[Math.round(Math.random() * (config.activity.length - 1))]}`
+    `${
+      config.activity[Math.round(Math.random() * (config.activity.length - 1))]
+    }`
   );
 
   setInterval(function () {
     client.user.setActivity(
-      `${config.activity[Math.floor(Math.random() * (config.activity.length - 1))]}`
+      `${
+        config.activity[
+          Math.floor(Math.random() * (config.activity.length - 1))
+        ]
+      }`
     );
-  }, 60000); // Changed to 60 seconds due to the bot possibly being rate-limited
+  }, 10000);
 });
 
 // When slash commands are ran
@@ -57,7 +64,9 @@ client.on("interactionCreate", async (interaction) => {
 
   try {
     await command.interaction(interaction, client);
-    console.log(`Command ${interaction.commandName} was ran by ${interaction.user.tag} (${interaction.user.id})`); // Logs the command
+    console.log(
+      `Command ${interaction.commandName} was ran by ${interaction.user.tag} (${interaction.user.id})`
+    ); // Logs the command
   } catch (error) {
     console.error(error);
     await interaction.reply({
