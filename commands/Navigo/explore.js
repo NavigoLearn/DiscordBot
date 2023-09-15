@@ -37,6 +37,7 @@ module.exports.help = {
 };
 
 module.exports.interaction = async (interaction, client) => {
+  await interaction.deferReply({ ephemeral: false })
   // It's 3am rn I got school in 4 hours I am going to love this
   const sortBy = interaction.options.getString(`sortby`);
   const order = interaction.options.getString(`order`);
@@ -52,7 +53,7 @@ module.exports.interaction = async (interaction, client) => {
   const data = await api.json();
   // Check for errors before the whole embed thing
   if (data.success === false) {
-    return interaction.reply({
+    return interaction.editReply({
       content: `There was an error with the API`,
       ephemeral: true,
     });
@@ -74,5 +75,5 @@ module.exports.interaction = async (interaction, client) => {
   });
 
     // Send the embed
-    interaction.reply({ embeds: [embed], ephemeral: true }); // Set to ephemeral due to it being able to clog channels
+    interaction.editReply({ embeds: [embed], ephemeral: true }); // Set to ephemeral due to it being able to clog channels
 };

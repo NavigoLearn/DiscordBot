@@ -18,6 +18,7 @@ module.exports.help = {
 };
 
 module.exports.interaction = async (interaction, client) => {
+  await interaction.deferReply({ ephemeral: false })
   const id = interaction.options.getInteger("id");
   let headers = new Headers({
     Accept: "application/json",
@@ -31,12 +32,12 @@ module.exports.interaction = async (interaction, client) => {
   if (json.success === true) {
     // Pass
   } else {
-    return interaction.reply({ content: `${json.message}`, ephemeral: true });
+    return interaction.editReply({ content: `${json.message}`, ephemeral: true });
   }
 
   // Check if ID is under 1
   if (id < 1) {
-    return interaction.reply({
+    return interaction.editReply({
       content: `ID cannot be under 0`,
       ephemeral: true,
     });
@@ -67,5 +68,5 @@ module.exports.interaction = async (interaction, client) => {
       { name: "Total likes", value: `${json.data.roadmapsLikes}`, inline: true }
     );
   // Send embed
-  interaction.reply({ embeds: [embed], ephemeral: false });
+  interaction.editReply({ embeds: [embed], ephemeral: false });
 };
