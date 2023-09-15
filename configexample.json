@@ -1,0 +1,13 @@
+{
+    "token": "TOKEN",
+    "clientId": "BOTID",
+    "activity": [
+      "watching people make roadmaps",
+      "learning from roadmaps",
+      "getting inspired by roadmaps",
+      "with the NavigoLearn team!"
+    ],
+    "UA": "RANDOM USERAGENT FOR API REQUESTS",
+    "Debuglogging": false
+  }
+  
