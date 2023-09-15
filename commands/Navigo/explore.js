@@ -68,7 +68,8 @@ module.exports.interaction = async (interaction, client) => {
       { name: `Author`, value: `${roadmap.userName}`, inline: false },
       { name: `Views`, value: `${roadmap.viewCount}`, inline: false },
       { name: `Likes`, value: `${roadmap.likeCount}`, inline: false },
-      { name: `ID`, value: `${roadmap.id}`, inline: false }
+      { name: `ID`, value: `${roadmap.id}`, inline: false },
+      { name: `URL`, value: `https://navigolearn.com/roadmap/${roadmap.id}`, inline: false },
     );
   });
 
