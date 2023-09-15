@@ -52,7 +52,7 @@ module.exports.interaction = async (interaction, client) => {
     .setDescription(`${json.data.description}`)
     .addFields(
       { name: "ID", value: `${json.data.id}`, inline: true },
-      { name: "Slug", value: `https://navigolearn/roadmap/${json.data.id}`, inline: true },
+      { name: "URL", value: `https://navigolearn.com/roadmap/${json.data.id}`, inline: true },
       { name: "Topic", value: `${json.data.topic}`, inline: true },
       { name: "Is Draft", value: `${json.data.isDraft}`, inline: true },
       { name: " ", value: ` `, inline: false },
