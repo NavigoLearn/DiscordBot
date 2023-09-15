@@ -100,10 +100,10 @@ client.on("interactionCreate", async (interaction) => {
   try {
     await command.interaction(interaction, client);
     console.log(
-      `Command ${interaction.commandName} was ran by ${interaction.user.tag} (${interaction.user.id})`
+      `Command ${FgGreen}${interaction.commandName}${Reset} was ran by ${FgMagenta}${interaction.user.tag} (${interaction.user.id})${Reset}`
     ); // Logs the command
   } catch (error) {
-    console.error(error);
+    console.error(FgRed + Blink + error + Reset);
     await interaction.reply({
       content: "There was an error while executing this command!",
       ephemeral: true,
