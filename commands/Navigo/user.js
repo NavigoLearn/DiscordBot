@@ -4,7 +4,7 @@ const { UA } = require("../../config.json");
 
 module.exports.help = {
   name: "user",
-  category: "Navigo",
+  cat: "Navigo",
   description: "Get information about a user",
   data: new SlashCommandBuilder()
     .setName("user")

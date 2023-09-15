@@ -2,6 +2,7 @@ const { Client, Intents, Collection } = require("discord.js");
 const fs = require("fs");
 
 const { token, Debuglogging, activity } = require("./config.json");
+const { underscore } = require("@discordjs/builders");
 
 // Things?
 const Reset = "\x1b[0m";
@@ -44,7 +45,8 @@ const client = new Client({
 client.commands = new Collection();
 
 const commandFolders = fs.readdirSync("./commands");
-
+console.log(`${FgYellow}Loading commands to memory${Reset}`)
+try {
 for (const folder of commandFolders) {
   const commandFiles = fs
     .readdirSync(`./commands/${folder}`)
@@ -53,17 +55,20 @@ for (const folder of commandFolders) {
     const command = require(`./commands/${folder}/${file}`);
     const commandName = command.help.name.toLowerCase();
     console.log(`-----------------------------`);
-    console.log(`| Loaded command: ${commandName} |`);
-    console.log(`| Command category: ${command.help.cat} |`);
+    console.log(`| Loaded command: ${Underscore}${commandName}${Reset} |`);
+    console.log(`| Command category: ${Underscore}${command.help.cat}${Reset} |`);
 
     client.commands.set(commandName, command);
   }
 }
+} catch (err) {
+  console.log(`${FgRed}[ERROR] ${err}${Reset}`);
+}
 console.log(`----------------------------`);
-console.log("Successfully loaded commands to memory");
+console.log(`${FgGreen}Successfully loaded commands to memory${Reset}`);
 
 client.on("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`${FgGreen}Logged in as ${Underscore}${client.user.tag}${Reset}!`);
   client.user.setActivity(
     `${activity[Math.round(Math.random() * (activity.length - 1))]}`
   );
@@ -103,7 +108,7 @@ client.on("interactionCreate", async (interaction) => {
       `Command ${FgGreen}${interaction.commandName}${Reset} was ran by ${FgMagenta}${interaction.user.tag} (${interaction.user.id})${Reset}`
     ); // Logs the command
   } catch (error) {
-    console.error(FgRed + Blink + error + Reset);
+    console.error(FgRed + error + Reset);
     await interaction.reply({
       content: "There was an error while executing this command!",
       ephemeral: true,

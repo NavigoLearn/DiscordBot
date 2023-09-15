@@ -4,7 +4,7 @@ const { UA } = require("../../config.json");
 
 module.exports.help = {
   name: "roadmap",
-  category: "Navigo",
+  cat: "Navigo",
   description: "Get information about a roadmap",
   data: new SlashCommandBuilder()
     .setName("roadmap")

@@ -20,7 +20,8 @@ module.exports.interaction = async (interaction, client) => {
         if (err) {
             return console.log(err);
         }
-        const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]")
+        const duration = moment.duration(client.uptime)
+        const durationformat = `${duration.days()}d ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`
     
     const embed = new MessageEmbed()
         .setColor("#FFFFFE")
@@ -28,7 +29,7 @@ module.exports.interaction = async (interaction, client) => {
         .setTitle("**Stats:**")
         .setColor("#9603fd")
         .addFields(
-            { name: "⌚️ Uptime ", value: duration },
+            { name: "⌚️ Uptime ", value: durationformat },
             { name: "⏳ API Latency", value: `${(client.ws.ping)}ms` },
             { name: "📝 Mem Usage", value: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${(os.totalmem() / 1024 / 1024).toFixed(2)} MB`},
             { name: "CPU usage", value: `\`${percent.toFixed(2)}%\`` },
