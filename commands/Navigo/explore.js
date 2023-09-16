@@ -37,13 +37,13 @@ module.exports.help = {
 };
 
 module.exports.interaction = async (interaction, client) => {
-  await interaction.deferReply({ ephemeral: false })
+  await interaction.deferReply({ ephemeral: false });
   // It's 3am rn I got school in 4 hours I am going to love this
   const sortBy = interaction.options.getString(`sortby`);
   const order = interaction.options.getString(`order`);
   const api = await fetch(
     `https://navigolearn.com/api/search/roadmaps?limit=10&sortby=${sortBy}&order=${order}`,
-    getHeaders(),
+    getHeaders()
   ); // Idk if I wanna add stuff to limit it or not
   const data = await api.json();
   // Check for errors before the whole embed thing
@@ -65,10 +65,14 @@ module.exports.interaction = async (interaction, client) => {
       { name: `Views`, value: `${roadmap.viewCount}`, inline: false },
       { name: `Likes`, value: `${roadmap.likeCount}`, inline: false },
       { name: `ID`, value: `${roadmap.id}`, inline: false },
-      { name: `URL`, value: `https://navigolearn.com/roadmap/${roadmap.id}`, inline: false },
+      {
+        name: `URL`,
+        value: `https://navigolearn.com/roadmap/${roadmap.id}`,
+        inline: false,
+      }
     );
   });
 
-    // Send the embed
-    interaction.editReply({ embeds: [embed], ephemeral: true }); // Set to ephemeral due to it being able to clog channels
+  // Send the embed
+  interaction.editReply({ embeds: [embed], ephemeral: true }); // Set to ephemeral due to it being able to clog channels
 };

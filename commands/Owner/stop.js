@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { authusers, othernavigodevs } = require("../../config.json");
 const { BgReded, Reset, Blink } = require("../../functions/colors.js");
+
 module.exports.help = {
     name: "stop",
     cat: "Dev",

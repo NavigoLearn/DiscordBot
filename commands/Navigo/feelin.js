@@ -16,7 +16,7 @@ module.exports.help = {
         })
 };
 
-module.exports.interaction = async(interaction, client) => {
+module.exports.interaction = async (interaction, client) => {
     await interaction.deferReply({ ephemeral: false })
     // fetch the api
     const initialapi = await fetch(`https://navigolearn.com/api/search/feeling-lucky`, getHeaders());
@@ -24,7 +24,7 @@ module.exports.interaction = async(interaction, client) => {
     // Get the ID given
     const roadmapid = initialjson.data;
     // fetch the api again with the roadmap
-    const api = await fetch(`https://navigolearn.com/api/roadmaps/${roadmapid}`, getHeaders());
+    const api = await fetch(`https://navigolearn.com/api/roadmaps/${roadmapid}`, headers);
     const json = await api.json();
 
     // check if it returns "success": true

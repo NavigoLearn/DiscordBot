@@ -1,4 +1,4 @@
-export function getUA() {
+function getUA() {
   // get package.json
   const packagejson = require("../package.json");
   // get the version
@@ -19,7 +19,7 @@ export function getUA() {
   return `${name}/${version} (${osname} ${osversion}; ${osarch}) Node.js/${nodeversion}`;
 }
 
-export function getHeaders() {
+function getHeaders() {
   // set the api headers
   let headers = new Headers({
     Accept: "application/json",
@@ -32,3 +32,9 @@ export function getHeaders() {
   });
   return headers;
 }
+
+// export the functions
+module.exports = {
+  getUA,
+  getHeaders,
+};
