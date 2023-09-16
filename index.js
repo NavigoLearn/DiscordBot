@@ -11,12 +11,14 @@ let cpuStat = require("cpu-stat");
 // Every hour send important data to the console such as memory usage, ping, etc
 setInterval(function () {
   // Get the uptime
-  const duration = moment.duration(client.uptime)
-  const uptime = `${duration.days()}d ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`
+  const duration = moment.duration(client.uptime);
+  const uptime = `${duration.days()}d ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`;
   // Get the ping
-  const ping = `${(client.ws.ping)}ms`
+  const ping = `${client.ws.ping}ms`;
   // Get the memory usage
-  const memusage = `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${(os.totalmem() / 1024 / 1024).toFixed(2)} MB`
+  const memusage = `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
+    2
+  )} / ${(os.totalmem() / 1024 / 1024).toFixed(2)} MB`;
   // Get the cpu usage
   /*cpuStat.usagePercent(function(err, percent, seconds) {
     if (err) {
@@ -40,7 +42,7 @@ const {
   FgRed,
   FgGreen,
   Underscore,
-  FgMagenta
+  FgMagenta,
 } = require("./functions/colors.js");
 
 const client = new Client({
