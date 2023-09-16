@@ -4,7 +4,7 @@ const {
   ActionRowBuilder,
 } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
-const { UA } = require("../../config.json");
+const { getHeaders } = require("../../utils/fetchUtils");
 
 module.exports.help = {
   name: `explore`,
@@ -41,14 +41,9 @@ module.exports.interaction = async (interaction, client) => {
   // It's 3am rn I got school in 4 hours I am going to love this
   const sortBy = interaction.options.getString(`sortby`);
   const order = interaction.options.getString(`order`);
-  let headers = new Headers({
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "User-Agent": UA, // User agent
-  });
   const api = await fetch(
     `https://navigolearn.com/api/search/roadmaps?limit=10&sortby=${sortBy}&order=${order}`,
-    headers
+    getHeaders(),
   ); // Idk if I wanna add stuff to limit it or not
   const data = await api.json();
   // Check for errors before the whole embed thing

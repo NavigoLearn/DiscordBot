@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
-const { UA } = require("../../config.json");
+const { getHeaders } = require("../../utils/fetchUtils");
 
 module.exports.help = {
   name: "roadmap",
@@ -20,14 +20,9 @@ module.exports.help = {
 module.exports.interaction = async (interaction, client) => {
   await interaction.deferReply({ ephemeral: false })
   const id = interaction.options.getInteger("id");
-  let headers = new Headers({
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "User-Agent": UA, // User agent
-  });
   const api = await fetch(
     `https://navigolearn.com/api/roadmaps/${id}`,
-    headers
+    getHeaders()
   );
   const json = await api.json();
 

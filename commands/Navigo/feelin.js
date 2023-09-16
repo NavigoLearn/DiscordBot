@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
-const { UA } = require("../../config.json");
+const { getHeaders } = require("../../utils/fetchUtils");
 
 module.exports.help = {
     name: `feelin`,
@@ -18,19 +18,13 @@ module.exports.help = {
 
 module.exports.interaction = async(interaction, client) => {
     await interaction.deferReply({ ephemeral: false })
-    // set the api headers
-    let headers = new Headers({
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "User-Agent": UA, // User agent
-    });
     // fetch the api
-    const initialapi = await fetch(`https://navigolearn.com/api/search/feeling-lucky`, headers);
+    const initialapi = await fetch(`https://navigolearn.com/api/search/feeling-lucky`, getHeaders());
     const initialjson = await initialapi.json();
     // Get the ID given
     const roadmapid = initialjson.data;
     // fetch the api again with the roadmap
-    const api = await fetch(`https://navigolearn.com/api/roadmaps/${roadmapid}`, headers);
+    const api = await fetch(`https://navigolearn.com/api/roadmaps/${roadmapid}`, getHeaders());
     const json = await api.json();
 
     // check if it returns "success": true
