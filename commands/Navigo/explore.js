@@ -45,6 +45,13 @@ module.exports.interaction = async (interaction, client) => {
     `https://navigolearn.com/api/search/roadmaps?limit=10&sortby=${sortBy}&order=${order}`,
     getHeaders()
   ); // Idk if I wanna add stuff to limit it or not
+  // Since the api now correctly reports 404
+  if (api.status === 404) {
+    return interaction.editReply({
+      content: `There was an error with the API`,
+      ephemeral: true,
+    });
+  }
   const data = await api.json();
   // Check for errors before the whole embed thing
   if (data.success === false) {

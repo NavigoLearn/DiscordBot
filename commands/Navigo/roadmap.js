@@ -18,19 +18,29 @@ module.exports.help = {
 };
 
 module.exports.interaction = async (interaction, client) => {
-  await interaction.deferReply({ ephemeral: false })
+  await interaction.deferReply({ ephemeral: false });
   const id = interaction.options.getInteger("id");
   const api = await fetch(
     `https://navigolearn.com/api/roadmaps/${id}`,
     getHeaders()
   );
+  // Since the api now correctly reports 404
+  if (api.status === 404) {
+    return interaction.editReply({
+      content: `There was an error with the API`,
+      ephemeral: true,
+    });
+  }
   const json = await api.json();
 
   // check if it returns "success": true
   if (json.success === true) {
     // Pass
   } else {
-    return interaction.editReply({ content: `${json.message}`, ephemeral: true });
+    return interaction.editReply({
+      content: `${json.message}`,
+      ephemeral: true,
+    });
   }
 
   // Check if ID is under 1
@@ -48,7 +58,11 @@ module.exports.interaction = async (interaction, client) => {
     .setDescription(`${json.data.description}`)
     .addFields(
       { name: "ID", value: `${json.data.id}`, inline: true },
-      { name: "URL", value: `https://navigolearn.com/roadmap/${json.data.id}`, inline: true },
+      {
+        name: "URL",
+        value: `https://navigolearn.com/roadmap/${json.data.id}`,
+        inline: true,
+      },
       { name: "Topic", value: `${json.data.topic}`, inline: true },
       { name: "Is Draft", value: `${json.data.isDraft}`, inline: true },
       { name: " ", value: ` `, inline: false },

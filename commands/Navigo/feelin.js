@@ -3,37 +3,50 @@ const { MessageEmbed } = require("discord.js");
 const { getHeaders } = require("../../utils/fetchUtils");
 
 module.exports.help = {
-    name: `feelin`,
-    desc: `Get a random roadmap`,
-    cat: `Navigo`,
-    data: new SlashCommandBuilder()
-        .setName(`feelin`)
-        .setDescription(`Get a random roadmap`)
-        .addSubcommand((subcommand) => {
-            return subcommand
-                .setName(`lucky`)
-                .setDescription(`Get a random roadmap`);
-        })
+  name: `feelin`,
+  desc: `Get a random roadmap`,
+  cat: `Navigo`,
+  data: new SlashCommandBuilder()
+    .setName(`feelin`)
+    .setDescription(`Get a random roadmap`)
+    .addSubcommand((subcommand) => {
+      return subcommand.setName(`lucky`).setDescription(`Get a random roadmap`);
+    }),
 };
 
 module.exports.interaction = async (interaction, client) => {
-    await interaction.deferReply({ ephemeral: false })
-    // fetch the api
-    const initialapi = await fetch(`https://navigolearn.com/api/search/feeling-lucky`, getHeaders());
-    const initialjson = await initialapi.json();
-    // Get the ID given
-    const roadmapid = initialjson.data;
-    // fetch the api again with the roadmap
-    const api = await fetch(`https://navigolearn.com/api/roadmaps/${roadmapid}`, headers);
-    const json = await api.json();
+  await interaction.deferReply({ ephemeral: false });
+  // fetch the api
+  const initialapi = await fetch(
+    `https://navigolearn.com/api/search/feeling-lucky`,
+    getHeaders()
+  );
+  const initialjson = await initialapi.json();
+  // Get the ID given
+  const roadmapid = initialjson.data;
+  // fetch the api again with the roadmap
+  const api = await fetch(
+    `https://navigolearn.com/api/roadmaps/${roadmapid}`,
+    headers
+  );
+  // Since the api now correctly reports 404
+  if (api.status === 404) {
+    return interaction.editReply({
+      content: `There was an error with the API`,
+      ephemeral: true,
+    });
+  }
+  const json = await api.json();
 
-    // check if it returns "success": true
-    if (json.success === true) {
-        // Pass
-    }
-    else {
-        return interaction.editReply({ content: `${json.message}`, ephemeral: true });
-    }
+  // check if it returns "success": true
+  if (json.success === true) {
+    // Pass
+  } else {
+    return interaction.editReply({
+      content: `${json.message}`,
+      ephemeral: true,
+    });
+  }
 
   // Start embed
   const embed = new MessageEmbed()
@@ -42,7 +55,11 @@ module.exports.interaction = async (interaction, client) => {
     .setDescription(`${json.data.description}`)
     .addFields(
       { name: "ID", value: `${json.data.id}`, inline: true },
-      { name: "URL", value: `https://navigolearn.com/roadmap/${json.data.id}`, inline: true },
+      {
+        name: "URL",
+        value: `https://navigolearn.com/roadmap/${json.data.id}`,
+        inline: true,
+      },
       { name: "Topic", value: `${json.data.topic}`, inline: true },
       { name: "Is Draft", value: `${json.data.isDraft}`, inline: true },
       { name: " ", value: ` `, inline: false },
@@ -55,10 +72,10 @@ module.exports.interaction = async (interaction, client) => {
 
   // Send embed
   interaction.editReply({ embeds: [embed], ephemeral: false });
-}
+};
 
 /**
  * Issues
- * 
+ *
  * - Once command is ran it never gets anything but the first ID it retrieves
-*/
+ */

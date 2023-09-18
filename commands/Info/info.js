@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed, version } = require("discord.js");
-const { UA } = require("../../config.json");
+const { getUA } = require("../../utils/fetchUtils");
 const moment = require("moment");
 let os = require("os");
 let cpuStat = require("cpu-stat");
@@ -37,7 +37,7 @@ module.exports.interaction = async (interaction, client) => {
           )} / ${(os.totalmem() / 1024 / 1024).toFixed(2)} MB`,
         },
         { name: "CPU usage", value: `\`${percent.toFixed(2)}%\`` },
-        { name: "📁 User Agent (Info)", value: `${UA}` }
+        { name: "📁 User Agent (Info)", value: `${getUA()}` }
       )
       .setTimestamp();
     interaction.reply({ embeds: [embed] });

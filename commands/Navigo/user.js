@@ -18,16 +18,29 @@ module.exports.help = {
 };
 
 module.exports.interaction = async (interaction, client) => {
-  await interaction.deferReply({ ephemeral: false })
+  await interaction.deferReply({ ephemeral: false });
   const id = interaction.options.getInteger("id");
-  const api = await fetch(`https://navigolearn.com/api/users/${id}`, getHeaders());
+  const api = await fetch(
+    `https://navigolearn.com/api/users/${id}`,
+    getHeaders()
+  );
+  // Since the api now correctly reports 404
+  if (api.status === 404) {
+    return interaction.editReply({
+      content: `There was an error with the API`,
+      ephemeral: true,
+    });
+  }
   const json = await api.json();
 
   // check if it returns "success": true
   if (json.success === true) {
     // Pass
   } else {
-    return interaction.editReply({ content: `${json.message}`, ephemeral: true });
+    return interaction.editReply({
+      content: `${json.message}`,
+      ephemeral: true,
+    });
   }
 
   // Check if ID is under 1
