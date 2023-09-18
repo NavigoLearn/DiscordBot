@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { authusers, othernavigodevs } = require("../../config.json");
-const { BgReded, Reset, Blink } = require("../../functions/colors.js");
+const { BgRed, Reset } = require("../../functions/colors.js");
 
 module.exports.help = {
     name: "stop",
@@ -27,6 +27,6 @@ module.exports.interaction = async (interaction, client) => {
     // Stop the bot
     await interaction.editReply({ content: `Stopping the bot...`, ephemeral: true });
     await client.destroy(); // Destroy the client
-    console.log(`${BgReded}Bot stopped${Reset}`) // Make sure to log it
+    console.log(`${BgRed}Bot stopped${Reset}`) // Make sure to log it
     process.exit(); // Effectivly ctrl + c
 }
