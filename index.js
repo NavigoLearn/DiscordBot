@@ -127,11 +127,35 @@ client.on("interactionCreate", async (interaction) => {
       `Command ${FgGreen}${interaction.commandName}${Reset} was ran by ${FgMagenta}${interaction.user.tag} (${interaction.user.id})${Reset}`
     ); // Logs the command
   } catch (error) {
-    console.error(FgRed + error + Reset);
-    await interaction.reply({
-      content: "There was an error while executing this command!",
-      ephemeral: true,
-    });
+    await console.error(FgRed + error.stack + Reset); // Not printing full error
+    // Check if deferred or replied
+    if (interaction.deferred || interaction.replied) {
+      // If debug logging is enabled
+      if (Debuglogging === true) {
+        return await interaction.followUp({
+          content: `\`\`\`js\n${error.stack}\`\`\``, // Send the error
+        })
+      }
+      
+      // Edit the reply
+      return await interaction.editReply({
+        content: `There was an error while executing this command!`,
+        ephemeral: true,
+      });
+    } else {
+      // If debug logging is enabled
+      if (Debuglogging === true) {
+        return await interaction.followUp({
+          content: `\`\`\`js\n${error.stack}\`\`\``, // Send the error
+        })
+      }
+
+      // Reply with the error
+      return await interaction.reply({
+        content: `There was an error while executing this command!`,
+        ephemeral: true,
+      });
+    }
   }
 });
 
