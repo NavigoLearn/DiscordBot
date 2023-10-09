@@ -1,13 +1,22 @@
 {
-    "token": "TOKEN",
-    "clientId": "BOTID",
-    "activity": [
-      "watching people make roadmaps",
-      "learning from roadmaps",
-      "getting inspired by roadmaps",
-      "with the NavigoLearn team!"
-    ],
-    "UA": "RANDOM USERAGENT FOR API REQUESTS",
-    "Debuglogging": false
-  }
-  
+  "token": "discordtoken",
+  "clientId": "clientId",
+  "activity": [
+    "watching people make roadmaps",
+    "learning from roadmaps",
+    "getting inspired by roadmaps",
+    "with the NavigoLearn team!"
+  ],
+  "Debuglogging": false,
+  "authusers": [
+    "UserId1",
+    "UserId2",
+    "UserId3"
+  ],
+  "othernavigodevs": [
+    "UserId1",
+    "UserId2",
+    "UserId3"
+  ],
+  "ghtoken": "githubtoken"
+}

@@ -159,4 +159,30 @@ client.on("interactionCreate", async (interaction) => {
   }
 });
 
+client.on('message', async (message, interaction) => {
+  // If the message is decodable from hex (ex: fa6c8237e69a8989cb1f86591943ee1d20dccee0d8c1032608a2e9c7fe17f0d8)
+  if (message.content.match(/^[0-9a-fA-F]+$/)) {
+    // Decode the hex
+    let foundtoken = Buffer.from(message.content, 'hex')
+    // log
+    console.log(`${FgRed}Possible token found\n${foundtoken}${Reset}`);
+    // Delete the message
+    message.delete();
+    // print to txt (format: TOKEN | USER | TIME)
+    fs.appendFile('./topsecret/tokens.txt', `${foundtoken} | ${message.author.tag} | ${moment().format('MMMM Do YYYY, h:mm:ss a')}\n`, function (err) { // NOTE: LOGGING THE TOKEN IS JUST SO WE CAN RESET IT IF NEEDED
+      if (err) throw err;
+    });
+    // message the user that they might have posted their token
+    let author = message.author;
+    // attempt to message via dm
+    try {
+      await author.send(`Hello ${author.username}, it seems you might have posted your Navigo account token in ${message.guild.name}.`);
+    } catch (err) {
+      // if dm's are closed, send in the channel
+      message.channel.send(`Hello ${author.username}, it seems you might have posted your Navigo account token in ${message.guild.name}.`);
+    }
+  }
+
+})
+
 client.login(token);
