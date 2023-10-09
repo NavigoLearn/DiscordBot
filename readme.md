@@ -24,6 +24,8 @@ npm i
 > [!NOTE]\
 > You can use the `config.example.json` file as a template.
 
+This step is very short, just rename `configexample.json` to `config.json` and include the necessary info. (refer to the info below)
+
 #### Info on each config variable
 
 - `token`: The Discord bot token. You can get this from the [Discord Developer Portal](https://discord.com/developers/applications).
