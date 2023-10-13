@@ -186,3 +186,16 @@ client.on('message', async (message, interaction) => {
 })
 
 client.login(token);
+
+// On quit
+process.on("SIGINT", () => {
+  console.log(`${FgRed}Stopping the bot...${Reset}`);
+  client.destroy(); // Destroy the client
+  console.log(`${BgRed}Bot stopped${Reset}`); // Make sure to log it
+  process.exit(); // Effectivly ctrl + c
+});
+
+// On error ignore
+process.on("unhandledRejection", (error) => {
+  console.log(`${FgRed}[ERROR] Prevent error from crashing process${Reset}`);
+});
