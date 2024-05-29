@@ -1,3 +1,6 @@
+> [!IMPORTANT]\
+> This repository has been archived due to major inactivty within the organization.
+
 # Navigo bot
 
 A NavigoLearn project!
